@@ -11,6 +11,7 @@ object Page1Render {
   val colors = Seq(Seq("red", "blue"), Seq("green", "cyan"))
 
   def render(isIndex: Boolean): Render = page("Page 1") { () =>
+    // Var[Seq[Seq[(color, index, opacity)]]]
     val colorsVar: Var[Seq[Seq[(String, Int, Double)]]] =
       Var(colors.map(_.zipWithIndex.map((c,i) => (c, i, 1.0))))
 
@@ -36,17 +37,20 @@ object Page1Render {
       components.PageTitle("Page 1"),
       button(
         "Swap",
-        onClick --> (_ => colorsVar.update(_.reverse))
+        styleAttr("border-radius:2em; background-color:#4eb5f1; color: white; padding:0.3em 1.2em;"),
+        onClick --> { _ =>
+          /* To make this work, put this update in two different transactions by
+           *  commenting out this update() and uncommenting the two set()s below */
+          colorsVar.update(_.reverse)
+          //val colors = colorsVar.now()
+          //colorsVar.set(Seq(Seq.empty, Seq.empty))
+          //colorsVar.set(colors.reverse)
+        }
       ),
       div(
         svg.svg(
           svg.width("400"),
           svg.height("400"),
-          /* To make this work, but without the translate, uncomment this group and 
-           *  comment out the two svg.g's below */
-          // svg.g(
-          //  children <-- aRects$.combineWith(bRects$).map(_ ++ _)
-          //),
           svg.g(
             children <-- aRects$
           ),
