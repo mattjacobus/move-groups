@@ -1,4 +1,4 @@
-# laminar-vite2-example
+# Problem with swapping elements between parents 
 
 An example of a [Vite](https://vitejs.dev/) build for a [Scala.js](https://scala-js.org) + [Laminar](https://github.com/raquo/Laminar) +
 [frontroute](https://github.com/tulz-app/frontroute) app.
